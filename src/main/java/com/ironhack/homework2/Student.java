@@ -1,0 +1,69 @@
+package com.ironhack.homework2;
+
+public class Student {
+
+    String studentId;
+    String name;
+    String address;
+    String email;
+//  Course course = null;
+//  ADD OPTIONAL ATTRIBUTES
+
+
+//  Parametrized constructor
+    public Student(String name, String address, String email) {
+        this.name = name;
+        this.address = address;
+        this.email = email;
+    }
+
+//  Constructor containing all variables - ADD Course course
+
+    public Student(String studentId, String name, String address, String email) {
+        this.studentId = studentId;
+        this.name = name;
+        this.address = address;
+        this.email = email;
+    }
+
+//  Getters
+
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+//  Setters
+
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
+
+}
