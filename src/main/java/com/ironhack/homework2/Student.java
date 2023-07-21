@@ -1,5 +1,7 @@
 package com.ironhack.homework2;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Student {
 
     //CONSTANTS
@@ -8,7 +10,7 @@ public class Student {
     private String name;
     private String address;
     private String email;
-    int idNumber = 1000;
+    private static final AtomicInteger studentIdCounter = new AtomicInteger(1000);
 //  Course course;
 //  ADD OPTIONAL ATTRIBUTES
 
@@ -18,17 +20,9 @@ public class Student {
         setName(name);
         setAddress(address);
         setEmail(email);
+        setStudentId();
     }
 
-//  Constructor containing all variables - ADD Course course
-
-    public Student(String studentId, String name, String address, String email) {
-        setStudentId(studentId);
-        setName(name);
-        setAddress(address);
-        setEmail(email);
-//        this.course = null;
-    }
 
 //  Getters
 
@@ -52,10 +46,8 @@ public class Student {
 //  Setters
 
 
-    public void setStudentId(String studentId) {
-        idNumber++;
-        studentId = Integer.toString(idNumber);
-        this.studentId = studentId;
+    public void setStudentId() {
+        this.studentId = String.valueOf(studentIdCounter.getAndIncrement());
     }
 
     public void setName(String name) {
