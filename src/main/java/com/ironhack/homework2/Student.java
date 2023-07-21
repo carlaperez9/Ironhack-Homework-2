@@ -2,28 +2,32 @@ package com.ironhack.homework2;
 
 public class Student {
 
-    String studentId;
-    String name;
-    String address;
-    String email;
-//  Course course = null;
+    //CONSTANTS
+
+    private String studentId;
+    private String name;
+    private String address;
+    private String email;
+    int idNumber = 1000;
+//  Course course;
 //  ADD OPTIONAL ATTRIBUTES
 
 
 //  Parametrized constructor
     public Student(String name, String address, String email) {
-        this.name = name;
-        this.address = address;
-        this.email = email;
+        setName(name);
+        setAddress(address);
+        setEmail(email);
     }
 
 //  Constructor containing all variables - ADD Course course
 
     public Student(String studentId, String name, String address, String email) {
-        this.studentId = studentId;
-        this.name = name;
-        this.address = address;
-        this.email = email;
+        setStudentId(studentId);
+        setName(name);
+        setAddress(address);
+        setEmail(email);
+//        this.course = null;
     }
 
 //  Getters
@@ -49,6 +53,8 @@ public class Student {
 
 
     public void setStudentId(String studentId) {
+        idNumber++;
+        studentId = Integer.toString(idNumber);
         this.studentId = studentId;
     }
 
@@ -63,7 +69,6 @@ public class Student {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
 
 }
