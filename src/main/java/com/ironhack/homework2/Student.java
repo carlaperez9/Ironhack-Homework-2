@@ -11,7 +11,7 @@ public class Student {
     private String address;
     private String email;
     private static final AtomicInteger studentIdCounter = new AtomicInteger(1000);
-//  Course course;
+//  com.ironhack.homework2.Course course;
 //  ADD OPTIONAL ATTRIBUTES
 
 

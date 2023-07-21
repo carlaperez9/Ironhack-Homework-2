@@ -1,3 +1,7 @@
+package com.ironhack.homework2;
+
+import com.ironhack.homework2.Teacher;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Course {
