@@ -1,13 +1,13 @@
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Course {
+
     //attributes
     private String courseId;
     private String name;
     private double price;
     private double money_earned;
     private static final AtomicInteger idCounter = new AtomicInteger(1000);
-
     private Teacher teacher;
 
     //constructor
@@ -48,6 +48,7 @@ public class Course {
         return money_earned;
     }
 
+    //with each purchase, money_earned is incremented
     public void setMoney_earned() {
         this.money_earned += this.price;
     }
