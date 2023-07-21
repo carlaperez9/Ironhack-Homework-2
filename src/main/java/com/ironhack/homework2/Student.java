@@ -5,14 +5,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Student {
 
     //CONSTANTS
-
     private String studentId;
     private String name;
     private String address;
     private String email;
     private static final AtomicInteger studentIdCounter = new AtomicInteger(1000);
-//  com.ironhack.homework2.Course course;
-//  ADD OPTIONAL ATTRIBUTES
+    private Course course;
 
 
 //  Parametrized constructor
@@ -21,12 +19,11 @@ public class Student {
         setAddress(address);
         setEmail(email);
         setStudentId();
+        this.course = null;
     }
 
 
 //  Getters
-
-
     public String getStudentId() {
         return studentId;
     }
@@ -44,8 +41,6 @@ public class Student {
     }
 
 //  Setters
-
-
     public void setStudentId() {
         this.studentId = String.valueOf(studentIdCounter.getAndIncrement());
     }
