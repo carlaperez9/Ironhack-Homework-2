@@ -12,6 +12,7 @@ public class Menu {
 
     public static void commandCenter(){
         String command = scanner.nextLine();
+
         switch(command){
             case "ENROLL":
                 //enrollStudents(student1.getStudentId(), courseId);
