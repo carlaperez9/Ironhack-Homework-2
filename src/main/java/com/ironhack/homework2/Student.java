@@ -12,7 +12,6 @@ public class Student {
     private static final AtomicInteger studentIdCounter = new AtomicInteger(1000);
     private Course course;
 
-
 //  Parametrized constructor
     public Student(String name, String address, String email) {
         setName(name);
@@ -21,7 +20,6 @@ public class Student {
         setStudentId();
         this.course = null;
     }
-
 
 //  Getters
     public String getStudentId() {
@@ -56,6 +54,5 @@ public class Student {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
 }
