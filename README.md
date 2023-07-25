@@ -37,3 +37,13 @@ No need to stress or deal with paperwork headaches. With our user-friendly comma
     Next, the user is asked for the number of students to be created (Do not specify the course yet, there is a command for it)
     Next, the user is prompted to enter details of each student based on the number chosen above
     Next, the user is now prompted to enter any command of the list below to execute a specified action in the system.
+
+---
+
+Grupo:
+- Merianni Nunez
+- Carla N. Perez
+- Fabiola Fonseca
+- Orlando Medina Rodriguez
+
+
