@@ -117,15 +117,22 @@ public class Menu {
         System.out.println("Course List:\n");
         for (Course course : courseMap.values()){
             System.out.println("Course: " + course.getName());
-            System.out.println("Course ID: " + course.getCourseId());
-            System.out.println(("Cost: " +  "$" + course.getPrice()));
             System.out.println("-----------------------------------");
         }
 
     }
 
-    private static void lookUpCourse(String courseId) {
+    private static void lookUpCourse(Map<String, Course> courseMap) {
         // Carla
+        for (Course course: courseMap.values()){
+            System.out.println("Course Details: \n");
+            System.out.println("Course Name: " + course.getName());
+            System.out.println("Course ID: " + course.getCourseId());
+            System.out.println("Cost: " +  "$" + course.getPrice());
+            System.out.println("Profit from this course: " + "$" + course.getMoney_earned());
+            System.out.println("-----------------------------------");
+        }
+
     }
 
     private static void showStudents() {
