@@ -1,5 +1,8 @@
 package com.ironhack.homework2;
 
+import com.ironhack.homework2.Course;
+import com.ironhack.homework2.Teacher;
+
 import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -109,10 +112,20 @@ public class Menu {
     private static void assignTeacher(String teacherId, String courseId) {
     }
 
-    private static void showCourses() {
+    private static void showCourses(Map<String, Course> courseMap) {
+        // Carla
+        System.out.println("Course List:\n");
+        for (Course course : courseMap.values()){
+            System.out.println("Course: " + course.getName());
+            System.out.println("Course ID: " + course.getCourseId());
+            System.out.println(("Cost: " +  "$" + course.getPrice()));
+            System.out.println("-----------------------------------");
+        }
+
     }
 
     private static void lookUpCourse(String courseId) {
+        // Carla
     }
 
     private static void showStudents() {
