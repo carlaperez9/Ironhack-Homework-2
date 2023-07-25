@@ -11,7 +11,7 @@ public class Menu {
     public static void main(String[] args) {
 
         //Student student1 = new Student("Carla","parada 22", "carla@popular.com");
-        /*System.out.println("SCHOOL MANAGEMENT SYSTEM");
+        System.out.println("SCHOOL MANAGEMENT SYSTEM");
         System.out.println("Enter school name: ");
         String schoolName = scanner.nextLine();
 
@@ -25,16 +25,16 @@ public class Menu {
 
         System.out.println("Enter amount of students to create: ");
         int numberStudent = scanner.nextInt();
-        Map<String, Student> studentMap = createStudentMap(numberStudent, scanner); */
+        Map<String, Student> studentMap = createStudentMap(numberStudent, scanner);
 
         //command center
         //while
-        commandCenter();
+        commandCenter(studentMap, teacherMap, courseMap);
 
 
     }
 
-    public static void commandCenter(){
+    public static void commandCenter(Map<String, Student> studentMap, Map<String, Teacher> teacherMap, Map<String, Course> courseMap){
 
         System.out.println("\nCommand Center: ");
         System.out.println("--> ENROLL [STUDENT_ID] [COURSE_ID]"); //FABIOLA ENROLL 1 2
@@ -65,10 +65,10 @@ public class Menu {
                         System.out.println("Command: SHOW COURSES");
                         break;
                     case "STUDENTS":
-                        System.out.println("Command: SHOW STUDENTS");
+                        showStudents(studentMap);
                         break;
                     case "TEACHERS":
-                        System.out.println("Command: SHOW TEACHERS");
+                        showTeachers(teacherMap);
                         break;
                     case "PROFIT":
                         System.out.println("Command: SHOW PROFIT");
@@ -87,7 +87,7 @@ public class Menu {
                         System.out.println("Command: LOOKUP COURSE");
                         break;
                     case "STUDENT":
-                        System.out.println("Command: LOOKUP STUDENT");
+                        lookUpStudent(lookupArgs[1], studentMap);
                         break;
                     case "TEACHER":
                         System.out.println("Command: LOOKUP TEACHER");
@@ -115,13 +115,41 @@ public class Menu {
     private static void lookUpCourse(String courseId) {
     }
 
-    private static void showStudents() {
+    private static void showStudents(Map<String, Student> studentMap) {
+        // show a list of all students
+        System.out.println("List of Students: ");
+        for (Student student : studentMap.values()){
+            System.out.println("ID: " + student.getStudentId());
+            System.out.println("Name: " + student.getName());
+            System.out.println("Address: " + student.getAddress());
+            System.out.println("Email: " + student.getEmail());
+            System.out.println("-----------------------------------");
+        }
     }
 
-    private static void lookUpStudent(String studentId) {
+    private static void lookUpStudent(String studentId, Map<String, Student> studentMap) {
+        // look up a specific student by their ID
+        Student student = studentMap.get(studentId);
+        if (student != null){
+            System.out.println("Student Info: ");
+            System.out.println("ID: " + student.getStudentId());
+            System.out.println("Name: " + student.getName());
+            System.out.println("Address: " + student.getAddress());
+            System.out.println("Email: " + student.getEmail());
+        } else {
+            System.out.println("Student with ID: " + studentId + " not found.");
+        }
     }
 
-    private static void showTeachers() {
+    private static void showTeachers(Map<String, Teacher> teacherMap) {
+        // show a list of all teachers
+        System.out.println("List of Teachers: ");
+        for (Teacher teacher : teacherMap.values()){
+            System.out.println("ID: " + teacher.getTeacherId());
+            System.out.println("Name: " + teacher.getName());
+            System.out.println("Salary: " + teacher.getSalary());
+            System.out.println("-----------------------------------");
+        }
     }
 
     private static void lookUpTeacher(String teacherId) {
