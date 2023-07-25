@@ -1,5 +1,6 @@
 package com.ironhack.homework2;
 
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Teacher {
@@ -40,5 +41,14 @@ public class Teacher {
 
     public void setSalary(double salary) {
         this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "teacherId='" + teacherId + '\'' +
+                ", name='" + name + '\'' +
+                ", salary=" + salary +
+                '}';
     }
 }
