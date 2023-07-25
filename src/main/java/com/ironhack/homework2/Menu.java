@@ -45,7 +45,7 @@ public class Menu {
         System.out.println("--> LOOKUP STUDENT [STUDENT_ID]"); //MERIANNI
         System.out.println("--> SHOW TEACHERS"); //MERIANNI
         System.out.println("--> LOOKUP TEACHER [TEACHER_ID]"); //ORLANDO
-        System.out.println("--> SHOW PROFIT"); //ORLANDO
+        System.out.println("--> SHOW PROFIT"); //TODO: ORLANDO complete method
 
         String answer = scanner.nextLine();
         String[] commandParts = answer.split("\\s+", 2);
@@ -90,7 +90,7 @@ public class Menu {
                         lookUpStudent(lookupArgs[1], studentMap);
                         break;
                     case "TEACHER":
-                        System.out.println("Command: LOOKUP TEACHER");
+                        lookUpTeacher(lookupArgs[1], teacherMap);
                         break;
                     default:
                         System.out.println("Invalid Command");
@@ -152,7 +152,21 @@ public class Menu {
         }
     }
 
-    private static void lookUpTeacher(String teacherId) {
+    private static void lookUpTeacher(String teacherId, Map<String, Teacher> teacherMap) {
+        // get the teacher
+        Teacher teacher = teacherMap.get(teacherId);
+
+        // this will print the teacher if it exists
+        if (teacher != null){
+            System.out.println("Teacher Info: ");
+            System.out.println("ID: " + teacher.getTeacherId());
+            System.out.println("Name: " + teacher.getName());
+            System.out.println("Address: " + teacher.getSalary());
+            System.out.println("-----------------------------------");
+        } else {
+            System.out.println("Teacher with ID: " + teacherId + " not found.");
+        }
+
     }
 
     private static void showProfit() {
@@ -162,7 +176,7 @@ public class Menu {
     public static HashMap<String, Teacher> createTeacherMap(int n, Scanner scanner){
         String name;
         double salary;
-        HashMap<String,Teacher> teacherMap = new HashMap<String, Teacher>();
+        HashMap<String,Teacher> teacherMap = new HashMap<>();
         scanner.nextLine();
         for (int i = 0; i < n; i++) {
             System.out.println("Please enter the teacher name:");
