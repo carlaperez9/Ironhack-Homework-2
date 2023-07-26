@@ -21,11 +21,11 @@ public class Menu {
         }
     }
 
-    //Test
+    //Test Fabiola
     private static void setupSchool() {
         String schoolName;
         do {
-            //input validation for name not being a string
+            //input validation for name not being a string fabiola
             System.out.println("Enter school name: ");
             schoolName = scanner.nextLine();
             if (schoolName.isEmpty() ) { //check string
@@ -43,7 +43,7 @@ public class Menu {
         createStudentMap(numStudents);
     }
 
-    //Test
+    //Test Fabiola
     private static int getIntInput(String message) {
         int num;
         do {
@@ -105,7 +105,7 @@ public class Menu {
         }
     }
 
-    //Test
+    //Test Fabiola
     private static void show(String str) throws InterruptedException {
         switch (str) {
             case "COURSES":
@@ -125,7 +125,7 @@ public class Menu {
         }
     }
 
-    //Test
+    //Test Fabiola
     private static void lookUp(String option, String str) {
         switch (option) {
             case "COURSE":
