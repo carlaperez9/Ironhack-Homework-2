@@ -39,7 +39,7 @@ public class Menu {
 
             //command center
             while (exitMenu == false) {
-                commandCenter();
+                commandCenter(studentMap, teacherMap, courseMap);
             }
         }
     }
@@ -107,10 +107,10 @@ public class Menu {
                         lookUpCourse(commandParts[2], courseMap);
                         break;
                     case "STUDENT":
-                        lookUpStudent(lookupArgs[1], studentMap);
+                        lookUpStudent(commandParts[1], studentMap);
                         break;
                     case "TEACHER":
-                        lookUpTeacher(lookupArgs[1], teacherMap);
+                        lookUpTeacher(commandParts[1], teacherMap);
                         break;
                     default:
                         System.out.println("Invalid Command");
