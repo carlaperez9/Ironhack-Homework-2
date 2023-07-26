@@ -15,6 +15,7 @@ public class Menu {
     public static Map<String, Course> courseMap;
     private static Map<String, Student> studentMap;
 
+
     private static boolean startMenu;
 
     private static boolean exitMenu;
@@ -45,7 +46,7 @@ public class Menu {
         }
     }
 
-    public static void commandCenter(){
+    public static void commandCenter(Map<String, Student> studentMap, Map<String, Teacher> teacherMap, Map<String, Course> courseMap){
 
         System.out.println("\nCommand Center: ");
         System.out.println("--> ENROLL [STUDENT_ID] [COURSE_ID]");
@@ -83,10 +84,10 @@ public class Menu {
                         }
                         break;
                     case "STUDENTS":
-                        System.out.println("Command: SHOW STUDENTS");
+                        showStudents(studentMap);
                         break;
                     case "TEACHERS":
-                        System.out.println("Command: SHOW TEACHERS");
+                        showTeachers(teacherMap);
                         break;
                     case "PROFIT":
                         System.out.println("Command: SHOW PROFIT");
@@ -104,7 +105,7 @@ public class Menu {
                         lookUpCourse(commandParts[2], courseMap);
                         break;
                     case "STUDENT":
-                        System.out.println("Command: LOOKUP STUDENT");
+                        lookUpStudent(lookupArgs[1], studentMap);
                         break;
                     case "TEACHER":
                         System.out.println("Command: LOOKUP TEACHER");
@@ -156,13 +157,41 @@ public class Menu {
 
     }
 
-    private static void showStudents() {
+    private static void showStudents(Map<String, Student> studentMap) {
+        // show a list of all students
+        System.out.println("List of Students: ");
+        for (Student student : studentMap.values()){
+            System.out.println("ID: " + student.getStudentId());
+            System.out.println("Name: " + student.getName());
+            System.out.println("Address: " + student.getAddress());
+            System.out.println("Email: " + student.getEmail());
+            System.out.println("-----------------------------------");
+        }
     }
 
-    private static void lookUpStudent(String studentId) {
+    private static void lookUpStudent(String studentId, Map<String, Student> studentMap) {
+        // look up a specific student by their ID
+        Student student = studentMap.get(studentId);
+        if (student != null){
+            System.out.println("Student Info: ");
+            System.out.println("ID: " + student.getStudentId());
+            System.out.println("Name: " + student.getName());
+            System.out.println("Address: " + student.getAddress());
+            System.out.println("Email: " + student.getEmail());
+        } else {
+            System.out.println("Student with ID: " + studentId + " not found.");
+        }
     }
 
-    private static void showTeachers() {
+    private static void showTeachers(Map<String, Teacher> teacherMap) {
+        // show a list of all teachers
+        System.out.println("List of Teachers: ");
+        for (Teacher teacher : teacherMap.values()){
+            System.out.println("ID: " + teacher.getTeacherId());
+            System.out.println("Name: " + teacher.getName());
+            System.out.println("Salary: " + teacher.getSalary());
+            System.out.println("-----------------------------------");
+        }
     }
 
     private static void lookUpTeacher(String teacherId) {
