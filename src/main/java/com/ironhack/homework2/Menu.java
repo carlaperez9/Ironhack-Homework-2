@@ -26,16 +26,16 @@ public class Menu {
             String schoolName = scanner.nextLine();
 
             System.out.println("Enter amount of teachers to create: ");
-            int n = scanner.nextInt();
-            teacherMap = createTeacherMap(n, scanner);
+            int numberTeacher = scanner.nextInt();
+            teacherMap = createTeacherMap(numberTeacher);
           
             System.out.println("Enter amount of courses to create: ");
             int numberCourse = scanner.nextInt();
-            courseMap = createCourseMap(numberCourse, scanner);
+            courseMap = createCourseMap(numberCourse);
 
             System.out.println("Enter amount of students to create: ");
             int numberStudent = scanner.nextInt();
-            studentMap = createStudentMap(numberStudent, scanner);
+            studentMap = createStudentMap(numberStudent);
 
             //command center
             while (exitMenu == false) {
@@ -241,7 +241,7 @@ public class Menu {
     }
 
     // create teachers Method
-    public static HashMap<String, Teacher> createTeacherMap(int n, Scanner scanner){
+    public static HashMap<String, Teacher> createTeacherMap(int n){
         String name;
         double salary;
         HashMap<String,Teacher> teacherMap = new HashMap<>();
@@ -269,7 +269,7 @@ public class Menu {
         return teacherMap;
     }
 
-    public static HashMap<String, Student> createStudentMap(int n, Scanner scanner){
+    public static HashMap<String, Student> createStudentMap(int n){
         String name, address, email;
         HashMap<String,Student> studentMap = new HashMap<>();
         scanner.nextLine();
@@ -312,7 +312,7 @@ public class Menu {
         return studentMap;
     }
 
-    public static HashMap<String, Course> createCourseMap(int n, Scanner scanner){
+    public static HashMap<String, Course> createCourseMap(int n){
         String name;
         double price;
         HashMap<String,Course> courseMap = new HashMap<>();
