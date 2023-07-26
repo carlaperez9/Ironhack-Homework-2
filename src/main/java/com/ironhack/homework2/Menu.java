@@ -22,7 +22,7 @@ public class Menu {
     }
 
     //Test Fabiola
-    private static void setupSchool() {
+    public static void setupSchool() {
         String schoolName;
         do {
             //input validation for name not being a string fabiola
@@ -47,7 +47,7 @@ public class Menu {
     }
 
     //Test Fabiola
-    private static int getIntInput(String message) {
+    public static int getIntInput(String message) {
         int num;
         do {
             System.out.print(message);
@@ -109,7 +109,7 @@ public class Menu {
     }
 
     //Test Fabiola
-    private static void show(String str) throws InterruptedException {
+    public static void show(String str) throws InterruptedException {
         switch (str) {
             case "COURSES":
                 showCourses(courseMap);
@@ -129,7 +129,7 @@ public class Menu {
     }
 
     //Test Fabiola
-    private static void lookUp(String option, String str) {
+    public static void lookUp(String option, String str) {
         switch (option) {
             case "COURSE":
                 lookUpCourse(str, courseMap);
@@ -146,20 +146,20 @@ public class Menu {
     }
 
     //Commands
-    private static void enrollStudents(String studentId, String courseId) {
+    public static void enrollStudents(String studentId, String courseId) {
         Student student = studentMap.get(studentId);
         student.setCourse(courseMap.get(courseId));
         courseMap.get(courseId).setMoney_earned();
         System.out.println("Student "+ student.getName() + " has been enrolled in " + student.getCourse().getName());
     }
 
-    private static void assignTeacher(String teacherId, String courseId) {
+    public static void assignTeacher(String teacherId, String courseId) {
         Course course = courseMap.get(courseId);
         course.setTeacher(teacherMap.get(teacherId));
         System.out.println("Teacher "+ course.getTeacher().getName() + " has been assigned to " + course.getName());
     }
 
-    private static void showCourses(Map<String, Course> courseMap) throws InterruptedException {
+    public static void showCourses(Map<String, Course> courseMap) throws InterruptedException {
         System.out.println("Course List:\n");
         for (Course course : courseMap.values()){
             System.out.println("Course: " + course.getName());
@@ -172,7 +172,7 @@ public class Menu {
     }
 
     //test
-    private static void lookUpCourse(String courseId, Map<String, Course> courseMap) {
+    public static void lookUpCourse(String courseId, Map<String, Course> courseMap) {
         System.out.println("Course Details: \n");
         System.out.println("Course Name: " + courseMap.get(courseId).getName());
         System.out.println("Course ID: " + courseMap.get(courseId).getCourseId());
@@ -181,7 +181,7 @@ public class Menu {
         System.out.println("-----------------------------------");
     }
 
-    private static void showStudents(Map<String, Student> studentMap) {
+    public static void showStudents(Map<String, Student> studentMap) {
         // show a list of all students
         System.out.println("List of Students: ");
         for (Student student : studentMap.values()){
@@ -194,7 +194,7 @@ public class Menu {
     }
 
     //test
-    private static void lookUpStudent(String studentId, Map<String, Student> studentMap) {
+    public static void lookUpStudent(String studentId, Map<String, Student> studentMap) {
         // look up a specific student by their ID
         Student student = studentMap.get(studentId);
         if (student != null){
@@ -208,7 +208,7 @@ public class Menu {
         }
     }
 
-    private static void showTeachers(Map<String, Teacher> teacherMap) {
+    public static void showTeachers(Map<String, Teacher> teacherMap) {
         // show a list of all teachers
         System.out.println("List of Teachers: ");
         for (Teacher teacher : teacherMap.values()){
@@ -220,7 +220,7 @@ public class Menu {
     }
 
     //test
-    private static void lookUpTeacher(String teacherId, Map<String, Teacher> teacherMap) {
+    public static void lookUpTeacher(String teacherId, Map<String, Teacher> teacherMap) {
         // get the teacher
         Teacher teacher = teacherMap.get(teacherId);
 
@@ -237,7 +237,7 @@ public class Menu {
     }
 
     //test
-    private static void showProfit(Map<String, Teacher> teacherMap, Map<String, Course> courseMap) {
+    public static void showProfit(Map<String, Teacher> teacherMap, Map<String, Course> courseMap) {
         double totalTeacherSalary = 0;          // this will hold the total salary of the teachers in the map
         double totalMoneyEarned = 0;            // this will hold the total money earned of all the courses
 
