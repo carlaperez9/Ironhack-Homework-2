@@ -34,7 +34,7 @@ public class Menu {
 
     }
 
-    public static void commandCenter(HashMap<String, Student> studentMap, HashMap<String, Teacher> teacherMap, HashMap<String, Course> courseMap){
+    public static void commandCenter(Map<String, Student> studentMap, Map<String, Teacher> teacherMap, Map<String, Course> courseMap){
 
         System.out.println("\nCommand Center: ");
         System.out.println("--> ENROLL [STUDENT_ID] [COURSE_ID]"); //FABIOLA ENROLL 1 2
@@ -105,13 +105,13 @@ public class Menu {
 
     }
 
-    private static void enrollStudents(String studentId, String courseId, HashMap<String, Student> studentMap, HashMap<String, Course> courseMap) {
+    private static void enrollStudents(String studentId, String courseId, Map<String, Student> studentMap, Map<String, Course> courseMap) {
         Student student = studentMap.get(studentId);
         student.setCourse(courseMap.get(courseId));
         System.out.println("Student has been enrolled successfully.");
     }
 
-    private static void assignTeacher(String teacherId, String courseId, HashMap<String, Teacher> teacherMap, HashMap<String, Course> courseMap) {
+    private static void assignTeacher(String teacherId, String courseId, Map<String, Teacher> teacherMap, Map<String, Course> courseMap) {
         Course course = courseMap.get(courseId);
         course.setTeacher(teacherMap.get(teacherId));
         System.out.println("Teacher has been assigned successfully");
