@@ -13,11 +13,10 @@ public class Menu {
     private static Map<String, Teacher> teacherMap;
     private static Map<String, Student> studentMap;
     private static Map<String, Course> courseMap;
-
     private static boolean startMenu;
     private static boolean exitMenu;
   
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         while(startMenu == false) {
            
@@ -44,7 +43,7 @@ public class Menu {
         }
     }
 
-    public static void commandCenter(Map<String, Student> studentMap, Map<String, Teacher> teacherMap, Map<String, Course> courseMap){
+    public static void commandCenter(Map<String, Student> studentMap, Map<String, Teacher> teacherMap, Map<String, Course> courseMap) throws InterruptedException {
 
         System.out.println("\nCommand Center: ");
         System.out.println("--> ENROLL [STUDENT_ID] [COURSE_ID]");
@@ -59,6 +58,7 @@ public class Menu {
         System.out.println("--> SETUP NEW SCHOOL");
         System.out.println("--> EXIT");
 
+        // input validation for command
         String answer = scanner.nextLine();
         String[] commandParts = answer.split(" ");
         String command = commandParts[0];
@@ -91,7 +91,6 @@ public class Menu {
                         showTeachers(teacherMap);
                         break;
                     case "PROFIT":
-
                         showProfit(teacherMap, courseMap);
                         break;
                     default:
@@ -156,6 +155,7 @@ public class Menu {
     }
 
     private static void lookUpCourse(String courseId, Map<String, Course> courseMap) {
+
         System.out.println("Course Details: \n");
         System.out.println("Course Name: " + courseMap.get(courseId).getName());
         System.out.println("Course ID: " + courseMap.get(courseId).getCourseId());
@@ -165,8 +165,14 @@ public class Menu {
 
     }
 
-    private static void showStudents(Map<String, Student> studentMap) {
-        // show a list of all students
+    public static void showStudents(Map<String, Student> studentMap) throws InterruptedException {
+
+        // if student map is null, throws a NullPointerException
+        if (studentMap == null){
+            throw new NullPointerException("Student map cannot be null");
+        }
+
+        // show a list of all students and it delays the print out by 1.5secs
         System.out.println("List of Students: ");
         for (Student student : studentMap.values()){
             System.out.println("ID: " + student.getStudentId());
@@ -174,10 +180,16 @@ public class Menu {
             System.out.println("Address: " + student.getAddress());
             System.out.println("Email: " + student.getEmail());
             System.out.println("-----------------------------------");
+            Thread.sleep(1500);
         }
     }
 
-    private static void lookUpStudent(String studentId, Map<String, Student> studentMap) {
+    public static void lookUpStudent(String studentId, Map<String, Student> studentMap) {
+        // throws an exception if the studentId is null
+        if(studentId == null || studentId.isEmpty()){
+            throw new IllegalArgumentException("Student ID cannot be null or empty.");
+        }
+
         // look up a specific student by their ID
         Student student = studentMap.get(studentId);
         if (student != null){
@@ -191,7 +203,12 @@ public class Menu {
         }
     }
 
-    private static void showTeachers(Map<String, Teacher> teacherMap) {
+    public static void showTeachers(Map<String, Teacher> teacherMap) throws InterruptedException {
+        // if teacherMap is null it will throw a NullPointerException
+        if (teacherMap == null){
+            throw new NullPointerException("Teacher map cannot be null");
+        }
+
         // show a list of all teachers
         System.out.println("List of Teachers: ");
         for (Teacher teacher : teacherMap.values()){
@@ -199,6 +216,7 @@ public class Menu {
             System.out.println("Name: " + teacher.getName());
             System.out.println("Salary: " + teacher.getSalary());
             System.out.println("-----------------------------------");
+            Thread.sleep(1500);
         }
     }
 
