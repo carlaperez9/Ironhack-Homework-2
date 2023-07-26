@@ -30,7 +30,10 @@ public class Menu {
             schoolName = scanner.nextLine();
             if (schoolName.isEmpty() ) { //check string
                 System.err.println("School name cannot be empty. Please try again.");
-            }
+            } else if (!schoolName.matches(".*[a-zA-Z]+.*")) {
+            System.err.println("School name must contain at least one letter. Please try again.");
+            schoolName = ""; // Reset schoolName to trigger the loop again
+        }
         } while (schoolName.isEmpty());
 
         int numTeachers = getIntInput("Enter amount of teachers to create: ");
