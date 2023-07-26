@@ -56,4 +56,12 @@ public class Course {
     public void setMoney_earned() {
         this.money_earned += this.price;
     }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
 }
