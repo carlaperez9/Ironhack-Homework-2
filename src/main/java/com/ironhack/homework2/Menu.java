@@ -10,15 +10,13 @@ import java.util.Map;
 
 public class Menu {
     private static final Scanner scanner = new Scanner(System.in);
-
-    public static Map<String, Teacher> teacherMap;
-    public static Map<String, Course> courseMap;
+    private static Map<String, Teacher> teacherMap;
     private static Map<String, Student> studentMap;
-
+    private static Map<String, Course> courseMap;
 
     private static boolean startMenu;
-
     private static boolean exitMenu;
+  
     public static void main(String[] args) {
 
         while(startMenu == false) {
@@ -30,7 +28,7 @@ public class Menu {
             System.out.println("Enter amount of teachers to create: ");
             int n = scanner.nextInt();
             teacherMap = createTeacherMap(n, scanner);
-
+          
             System.out.println("Enter amount of courses to create: ");
             int numberCourse = scanner.nextInt();
             courseMap = createCourseMap(numberCourse, scanner);
@@ -68,9 +66,12 @@ public class Menu {
         switch (command) {
             case "ENROLL":
                 System.out.println("Command: ENROLL");
+                System.out.println(commandParts[0] + " " +commandParts[1] +" " + commandParts[2]);
+                enrollStudents(commandParts[1], commandParts[2]);
                 break;
             case "ASSIGN":
                 System.out.println("Command: ASSIGN");
+                assignTeacher(commandParts[1], commandParts[2]);
                 break;
             case "SHOW":
                 String show = commandParts[1];
@@ -124,13 +125,19 @@ public class Menu {
             default:
                 System.out.println("Invalid Command");
         }
-
     }
 
     private static void enrollStudents(String studentId, String courseId) {
+        Student student = studentMap.get(studentId);
+        student.setCourse(courseMap.get(courseId));
+        courseMap.get(courseId).setMoney_earned();
+        System.out.println("Student "+ student.getName() + " has been enrolled in " + student.getCourse().getName());
     }
 
     private static void assignTeacher(String teacherId, String courseId) {
+        Course course = courseMap.get(courseId);
+        course.setTeacher(teacherMap.get(teacherId));
+        System.out.println("Teacher "+ course.getTeacher().getName() + " has been assigned to " + course.getName());
     }
 
     private static void showCourses(Map<String, Course> courseMap) throws InterruptedException {
