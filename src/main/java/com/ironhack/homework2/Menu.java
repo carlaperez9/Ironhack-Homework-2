@@ -7,58 +7,60 @@ import java.util.Map;
 
 public class Menu {
     private static final Scanner scanner = new Scanner(System.in);
+    private static Map<String, Teacher> teacherMap;
+    private static Map<String, Student> studentMap;
+    private static Map<String, Course> courseMap;
 
     public static void main(String[] args) {
 
-        //Student student1 = new Student("Carla","parada 22", "carla@popular.com");
+       //Student student1 = new Student("Carla","parada 22", "carla@popular.com");
         System.out.println("SCHOOL MANAGEMENT SYSTEM");
         System.out.println("Enter school name: ");
         String schoolName = scanner.nextLine();
 
         System.out.println("Enter amount of teachers to create: ");
         int n = scanner.nextInt();
-        Map<String, Teacher> teacherMap = createTeacherMap(n, scanner);
+        teacherMap = createTeacherMap(n, scanner);
 
         System.out.println("Enter amount of courses to create: ");
         int numberCourse = scanner.nextInt();
-        Map<String, Course> courseMap = createCourseMap(numberCourse, scanner);
+        courseMap = createCourseMap(numberCourse, scanner);
 
         System.out.println("Enter amount of students to create: ");
         int numberStudent = scanner.nextInt();
-        Map<String, Student> studentMap = createStudentMap(numberStudent, scanner);
+        studentMap = createStudentMap(numberStudent, scanner);
 
-        //command center
-        //while
-        commandCenter(studentMap, teacherMap, courseMap);
+        commandCenter();
 
 
     }
 
-    public static void commandCenter(Map<String, Student> studentMap, Map<String, Teacher> teacherMap, Map<String, Course> courseMap){
+    public static void commandCenter(){
 
         System.out.println("\nCommand Center: ");
-        System.out.println("--> ENROLL [STUDENT_ID] [COURSE_ID]"); //FABIOLA ENROLL 1 2
-        System.out.println("--> ASSIGN [TEACHER_ID] [COURSE_ID]"); //FABIOLA
-        System.out.println("--> SHOW COURSES"); //CARLA
-        System.out.println("--> LOOKUP COURSE [COURSE_ID]"); //CARLA
-        System.out.println("--> SHOW STUDENTS"); //MERIANNI
-        System.out.println("--> LOOKUP STUDENT [STUDENT_ID]"); //MERIANNI
-        System.out.println("--> SHOW TEACHERS"); //MERIANNI
-        System.out.println("--> LOOKUP TEACHER [TEACHER_ID]"); //ORLANDO
-        System.out.println("--> SHOW PROFIT"); //ORLANDO
+        System.out.println("--> ENROLL [STUDENT_ID] [COURSE_ID]");
+        System.out.println("--> ASSIGN [TEACHER_ID] [COURSE_ID]");
+        System.out.println("--> SHOW COURSES");
+        System.out.println("--> LOOKUP COURSE [COURSE_ID]");
+        System.out.println("--> SHOW STUDENTS");
+        System.out.println("--> LOOKUP STUDENT [STUDENT_ID]");
+        System.out.println("--> SHOW TEACHERS");
+        System.out.println("--> LOOKUP TEACHER [TEACHER_ID]");
+        System.out.println("--> SHOW PROFIT");
 
         String answer = scanner.nextLine();
-        String[] commandParts = answer.split("\\s+", 2);
+        String[] commandParts = answer.split(" ");
         String command = commandParts[0];
 
         switch (command) {
             case "ENROLL":
                 System.out.println("Command: ENROLL");
-                enrollStudents(commandParts[1], commandParts[2], studentMap, courseMap);
+                System.out.println(commandParts[0] + " " +commandParts[1] +" " + commandParts[2]);
+                enrollStudents(commandParts[1], commandParts[2]);
                 break;
             case "ASSIGN":
                 System.out.println("Command: ASSIGN");
-                assignTeacher(commandParts[1], commandParts[2], teacherMap,courseMap);
+                assignTeacher(commandParts[1], commandParts[2]);
                 break;
             case "SHOW":
                 String show = commandParts[1];
@@ -102,19 +104,19 @@ public class Menu {
             default:
                 System.out.println("Invalid Command");
         }
-
     }
 
-    private static void enrollStudents(String studentId, String courseId, Map<String, Student> studentMap, Map<String, Course> courseMap) {
+    private static void enrollStudents(String studentId, String courseId) {
         Student student = studentMap.get(studentId);
         student.setCourse(courseMap.get(courseId));
-        System.out.println("Student has been enrolled successfully.");
+        courseMap.get(courseId).setMoney_earned();
+        System.out.println("Student "+ student.getName() + " has been enrolled in " + student.getCourse().getName());
     }
 
-    private static void assignTeacher(String teacherId, String courseId, Map<String, Teacher> teacherMap, Map<String, Course> courseMap) {
+    private static void assignTeacher(String teacherId, String courseId) {
         Course course = courseMap.get(courseId);
         course.setTeacher(teacherMap.get(teacherId));
-        System.out.println("Teacher has been assigned successfully");
+        System.out.println("Teacher "+ course.getTeacher().getName() + " has been assigned to " + course.getName());
     }
 
     private static void showCourses() {
@@ -234,5 +236,4 @@ public class Menu {
         System.out.println("Courses were created successfully");
         return courseMap;
     }
-
 }
