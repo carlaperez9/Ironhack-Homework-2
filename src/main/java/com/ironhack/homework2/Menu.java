@@ -65,15 +65,24 @@ public class Menu {
 
         switch (command) {
             case "ENROLL":
-                System.out.println("Command: ENROLL");
-                System.out.println(commandParts[0] + " " +commandParts[1] +" " + commandParts[2]);
+                if (commandParts.length != 3){
+                    System.err.println("Invalid ENROLL command. Valid command: ENROLL [STUDENT_ID] [COURSE_ID]");
+                    break;
+                }
                 enrollStudents(commandParts[1], commandParts[2]);
                 break;
             case "ASSIGN":
-                System.out.println("Command: ASSIGN");
+                if (commandParts.length != 3){
+                    System.err.println("Invalid ASSIGN command. Valid command: ASSIGN [TEACHER_ID] [COURSE_ID]");
+                    break;
+                }
                 assignTeacher(commandParts[1], commandParts[2]);
                 break;
             case "SHOW":
+                if (commandParts.length != 2){
+                    System.err.println("Invalid SHOW command. Valid command: SHOW COURSES/STUDENTS/TEACHERS");
+                    break;
+                }
                 String show = commandParts[1];
                 switch (show) {
                     case "COURSES":
@@ -99,6 +108,10 @@ public class Menu {
                 }
                 break;
             case "LOOKUP":
+                if (commandParts.length != 3){
+                    System.err.println("Invalid LOOKUP command. Valid command: LOOKUP COURSE [COURSE_ID], LOOKUP TEACHER [TEACHER_ID], LOOKUP STUDENT [STUDENT_ID]");
+                    break;
+                }
                 switch (commandParts[1]) {
                     case "COURSE":
                         System.out.println(commandParts[0] + commandParts[1] + commandParts[2]);
@@ -155,6 +168,10 @@ public class Menu {
     }
 
     private static void lookUpCourse(String courseId, Map<String, Course> courseMap) {
+        // throws an exception if the courseId is null
+        if(courseId == null || courseId.isEmpty()){
+            throw new IllegalArgumentException("Course ID cannot be null or empty.");
+        }
 
         System.out.println("Course Details: \n");
         System.out.println("Course Name: " + courseMap.get(courseId).getName());
@@ -220,7 +237,13 @@ public class Menu {
         }
     }
 
-    public static void lookUpTeacher(String teacherId, Map<String, Teacher> teacherMap) {
+
+    public static void lookUpTeacher(String teacherId, Map<String, Teacher> teacherMap){
+        // throws an exception if the teacherId is null
+        if(teacherId == null || teacherId.isEmpty()){
+            throw new IllegalArgumentException("Course ID cannot be null or empty.");
+        }
+
         // get the teacher
         Teacher teacher = teacherMap.get(teacherId);
 
