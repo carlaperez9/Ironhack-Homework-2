@@ -71,7 +71,8 @@ public class Menu {
                         showTeachers(teacherMap);
                         break;
                     case "PROFIT":
-                        System.out.println("Command: SHOW PROFIT");
+
+                        showProfit(teacherMap, courseMap);
                         break;
                     default:
                         System.out.println("Invalid Command");
@@ -169,7 +170,25 @@ public class Menu {
 
     }
 
-    private static void showProfit() {
+    private static void showProfit(Map<String, Teacher> teacherMap, Map<String, Course> courseMap) {
+        double totalTeacherSalary = 0;          // this will hold the total salary of the teachers in the map
+        double totalMoneyEarned = 0;            // this will hold the total money earned of all the courses
+
+        // iterate through the teacher map
+        for (Teacher teacher : teacherMap.values()){
+            // store the  teachers salary in a variable
+            totalTeacherSalary += teacher.getSalary();
+        }
+
+        // iterate through the course map
+        for (Course course : courseMap.values()){
+            // store the money earned by courses
+            totalMoneyEarned += course.getMoney_earned();
+        }
+
+        // display the profit on the console
+        System.out.println("The total amount of money earned in this school is:");
+        System.out.println("$" + (totalMoneyEarned - totalTeacherSalary));
     }
 
     // create teachers Method
