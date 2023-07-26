@@ -20,7 +20,7 @@ public class Menu {
     public static void main(String[] args) {
 
         while(startMenu == false) {
-            //Student student1 = new Student("Carla","parada 22", "carla@popular.com");
+           
             System.out.println("SCHOOL MANAGEMENT SYSTEM");
             System.out.println("Enter school name: ");
             String schoolName = scanner.nextLine();
@@ -91,7 +91,8 @@ public class Menu {
                         showTeachers(teacherMap);
                         break;
                     case "PROFIT":
-                        System.out.println("Command: SHOW PROFIT");
+
+                        showProfit(teacherMap, courseMap);
                         break;
                     default:
                         System.out.println("Invalid Command");
@@ -109,7 +110,7 @@ public class Menu {
                         lookUpStudent(lookupArgs[1], studentMap);
                         break;
                     case "TEACHER":
-                        System.out.println("Command: LOOKUP TEACHER");
+                        lookUpTeacher(lookupArgs[1], teacherMap);
                         break;
                     default:
                         System.out.println("Invalid Command");
@@ -201,17 +202,49 @@ public class Menu {
         }
     }
 
-    private static void lookUpTeacher(String teacherId) {
+    private static void lookUpTeacher(String teacherId, Map<String, Teacher> teacherMap) {
+        // get the teacher
+        Teacher teacher = teacherMap.get(teacherId);
+
+        // this will print the teacher if it exists
+        if (teacher != null){
+            System.out.println("Teacher Info: ");
+            System.out.println("ID: " + teacher.getTeacherId());
+            System.out.println("Name: " + teacher.getName());
+            System.out.println("Address: " + teacher.getSalary());
+            System.out.println("-----------------------------------");
+        } else {
+            System.out.println("Teacher with ID: " + teacherId + " not found.");
+        }
+
     }
 
-    private static void showProfit() {
+    private static void showProfit(Map<String, Teacher> teacherMap, Map<String, Course> courseMap) {
+        double totalTeacherSalary = 0;          // this will hold the total salary of the teachers in the map
+        double totalMoneyEarned = 0;            // this will hold the total money earned of all the courses
+
+        // iterate through the teacher map
+        for (Teacher teacher : teacherMap.values()){
+            // store the  teachers salary in a variable
+            totalTeacherSalary += teacher.getSalary();
+        }
+
+        // iterate through the course map
+        for (Course course : courseMap.values()){
+            // store the money earned by courses
+            totalMoneyEarned += course.getMoney_earned();
+        }
+
+        // display the profit on the console
+        System.out.println("The total amount of money earned in this school is:");
+        System.out.println("$" + (totalMoneyEarned - totalTeacherSalary));
     }
 
     // create teachers Method
     public static HashMap<String, Teacher> createTeacherMap(int n, Scanner scanner){
         String name;
         double salary;
-        HashMap<String,Teacher> teacherMap = new HashMap<String, Teacher>();
+        HashMap<String,Teacher> teacherMap = new HashMap<>();
         scanner.nextLine();
         for (int i = 0; i < n; i++) {
             System.out.println("Please enter the teacher name:");
