@@ -1,9 +1,5 @@
 package com.ironhack.homework2;
 
-import com.ironhack.homework2.Course;
-import com.ironhack.homework2.Teacher;
-
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Map;
@@ -13,39 +9,60 @@ public class Menu {
     private static Map<String, Teacher> teacherMap;
     private static Map<String, Student> studentMap;
     private static Map<String, Course> courseMap;
-
-    private static boolean startMenu;
     private static boolean exitMenu;
   
     public static void main(String[] args) {
-
-        while(startMenu == false) {
-           
-            System.out.println("SCHOOL MANAGEMENT SYSTEM");
-            System.out.println("Enter school name: ");
-            String schoolName = scanner.nextLine();
-
-            System.out.println("Enter amount of teachers to create: ");
-            int numberTeacher = scanner.nextInt();
-            teacherMap = createTeacherMap(numberTeacher);
-          
-            System.out.println("Enter amount of courses to create: ");
-            int numberCourse = scanner.nextInt();
-            courseMap = createCourseMap(numberCourse);
-
-            System.out.println("Enter amount of students to create: ");
-            int numberStudent = scanner.nextInt();
-            studentMap = createStudentMap(numberStudent);
-
-            //command center
+        while(true) {
+            System.out.println("************************* SCHOOL MANAGEMENT SYSTEM ****************************");
+            setupSchool();
             while (exitMenu == false) {
                 commandCenter(studentMap, teacherMap, courseMap);
             }
         }
     }
 
-    public static void commandCenter(Map<String, Student> studentMap, Map<String, Teacher> teacherMap, Map<String, Course> courseMap){
+    //Test
+    private static void setupSchool() {
+        String schoolName;
+        do {
+            //input validation for name not being a string
+            System.out.println("Enter school name: ");
+            schoolName = scanner.nextLine();
+            if (schoolName.isEmpty() ) { //check string
+                System.err.println("School name cannot be empty. Please try again.");
+            }
+        } while (schoolName.isEmpty());
 
+        int numTeachers = getIntInput("Enter amount of teachers to create: ");
+        createTeacherMap(numTeachers);
+
+        int numCourses = getIntInput("Enter amount of courses to create: ");
+        createCourseMap(numCourses);
+
+        int numStudents = getIntInput("Enter amount of students to create: ");
+        createStudentMap(numStudents);
+    }
+
+    //Test
+    private static int getIntInput(String message) {
+        int num;
+        do {
+            System.out.print(message);
+            try {
+                num = Integer.parseInt(scanner.nextLine());
+                if (num <= 0) {
+                    System.err.println("Please enter a positive number.");
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid input. Please enter a valid number.");
+                num = -1;
+            }
+        } while (num <= 0);
+        return num;
+    }
+
+    //test
+    public static void commandCenter(Map<String, Student> studentMap, Map<String, Teacher> teacherMap, Map<String, Course> courseMap){
         System.out.println("\nCommand Center: ");
         System.out.println("--> ENROLL [STUDENT_ID] [COURSE_ID]");
         System.out.println("--> ASSIGN [TEACHER_ID] [COURSE_ID]");
@@ -56,70 +73,30 @@ public class Menu {
         System.out.println("--> SHOW TEACHERS");
         System.out.println("--> LOOKUP TEACHER [TEACHER_ID]");
         System.out.println("--> SHOW PROFIT");
-        System.out.println("--> SETUP NEW SCHOOL");
         System.out.println("--> EXIT");
-
+        //input validation for command
         String answer = scanner.nextLine();
         String[] commandParts = answer.split(" ");
         String command = commandParts[0];
 
         switch (command) {
             case "ENROLL":
-                System.out.println("Command: ENROLL");
-                System.out.println(commandParts[0] + " " +commandParts[1] +" " + commandParts[2]);
                 enrollStudents(commandParts[1], commandParts[2]);
                 break;
             case "ASSIGN":
-                System.out.println("Command: ASSIGN");
                 assignTeacher(commandParts[1], commandParts[2]);
                 break;
             case "SHOW":
-                String show = commandParts[1];
-                switch (show) {
-                    case "COURSES":
-                        System.out.println("Command: SHOW COURSES");
-                        try {
-                            showCourses(courseMap);
-                        }catch(InterruptedException e){
-                            System.out.println("Interruption occurred.");
-                        }
-                        break;
-                    case "STUDENTS":
-                        showStudents(studentMap);
-                        break;
-                    case "TEACHERS":
-                        showTeachers(teacherMap);
-                        break;
-                    case "PROFIT":
-
-                        showProfit(teacherMap, courseMap);
-                        break;
-                    default:
-                        System.out.println("Invalid Command");
-                        break;
+                try {
+                    show(commandParts[1]);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
                 break;
             case "LOOKUP":
-                switch (commandParts[1]) {
-                    case "COURSE":
-                        System.out.println(commandParts[0] + commandParts[1] + commandParts[2]);
-                        System.out.println("Command: LOOKUP COURSE");
-                        lookUpCourse(commandParts[2], courseMap);
-                        break;
-                    case "STUDENT":
-                        lookUpStudent(commandParts[1], studentMap);
-                        break;
-                    case "TEACHER":
-                        lookUpTeacher(commandParts[1], teacherMap);
-                        break;
-                    default:
-                        System.out.println("Invalid Command");
-                        break;
-                }
+                lookUp(commandParts[1], commandParts[2]);
                 break;
 
-            case "SETUP":
-                startMenu = true;
             case "EXIT":
                 exitMenu = true;
 
@@ -128,6 +105,44 @@ public class Menu {
         }
     }
 
+    //Test
+    private static void show(String str) throws InterruptedException {
+        switch (str) {
+            case "COURSES":
+                showCourses(courseMap);
+                break;
+            case "STUDENTS":
+                showStudents(studentMap);
+                break;
+            case "TEACHERS":
+                showTeachers(teacherMap);
+                break;
+            case "PROFIT":
+                showProfit(teacherMap, courseMap);
+                break;
+            default:
+                System.out.println("Invalid Command");
+        }
+    }
+
+    //Test
+    private static void lookUp(String option, String str) {
+        switch (option) {
+            case "COURSE":
+                lookUpCourse(str, courseMap);
+                break;
+            case "STUDENT":
+                lookUpStudent(str, studentMap);
+                break;
+            case "TEACHER":
+                lookUpTeacher(str, teacherMap);
+                break;
+            default:
+                System.out.println("Invalid Command");
+        }
+    }
+
+    //Commands
     private static void enrollStudents(String studentId, String courseId) {
         Student student = studentMap.get(studentId);
         student.setCourse(courseMap.get(courseId));
@@ -142,7 +157,6 @@ public class Menu {
     }
 
     private static void showCourses(Map<String, Course> courseMap) throws InterruptedException {
-        // Carla
         System.out.println("Course List:\n");
         for (Course course : courseMap.values()){
             System.out.println("Course: " + course.getName());
@@ -152,9 +166,9 @@ public class Menu {
             System.out.println("-----------------------------------");
             Thread.sleep(1500);
         }
-
     }
 
+    //test
     private static void lookUpCourse(String courseId, Map<String, Course> courseMap) {
         System.out.println("Course Details: \n");
         System.out.println("Course Name: " + courseMap.get(courseId).getName());
@@ -162,7 +176,6 @@ public class Menu {
         System.out.println("Cost: " +  "$" + courseMap.get(courseId).getPrice());
         System.out.println("Profit from this course: " + "$" + courseMap.get(courseId).getMoney_earned());
         System.out.println("-----------------------------------");
-
     }
 
     private static void showStudents(Map<String, Student> studentMap) {
@@ -177,6 +190,7 @@ public class Menu {
         }
     }
 
+    //test
     private static void lookUpStudent(String studentId, Map<String, Student> studentMap) {
         // look up a specific student by their ID
         Student student = studentMap.get(studentId);
@@ -202,6 +216,7 @@ public class Menu {
         }
     }
 
+    //test
     private static void lookUpTeacher(String teacherId, Map<String, Teacher> teacherMap) {
         // get the teacher
         Teacher teacher = teacherMap.get(teacherId);
@@ -216,125 +231,131 @@ public class Menu {
         } else {
             System.out.println("Teacher with ID: " + teacherId + " not found.");
         }
-
     }
 
+    //test
     private static void showProfit(Map<String, Teacher> teacherMap, Map<String, Course> courseMap) {
         double totalTeacherSalary = 0;          // this will hold the total salary of the teachers in the map
         double totalMoneyEarned = 0;            // this will hold the total money earned of all the courses
 
         // iterate through the teacher map
         for (Teacher teacher : teacherMap.values()){
-            // store the  teachers salary in a variable
             totalTeacherSalary += teacher.getSalary();
         }
-
         // iterate through the course map
         for (Course course : courseMap.values()){
-            // store the money earned by courses
             totalMoneyEarned += course.getMoney_earned();
         }
-
         // display the profit on the console
         System.out.println("The total amount of money earned in this school is:");
         System.out.println("$" + (totalMoneyEarned - totalTeacherSalary));
     }
 
-    // create teachers Method
-    public static HashMap<String, Teacher> createTeacherMap(int n){
+    //test
+    public static void createTeacherMap(int n) {
         String name;
         double salary;
-        HashMap<String,Teacher> teacherMap = new HashMap<>();
         scanner.nextLine();
+
         for (int i = 0; i < n; i++) {
-            System.out.println("Please enter the teacher name:");
-            name = scanner.nextLine();
+            do {
+                System.out.println("Please enter the teacher name:");
+                name = scanner.nextLine();
+                if (name == null || name.isEmpty()) {
+                    System.err.println("Teacher name cannot be empty. Please try again.");
+                }
+            } while (name == null || name.isEmpty());
 
-            if (name == null){
-                throw new NullPointerException("Teacher name is null!");
+            while (true) {
+                System.out.println("Please enter the salary:");
+                if (scanner.hasNextDouble()) {
+                    salary = scanner.nextDouble();
+                    if (salary < 0) {
+                        System.err.println("Salary cannot be negative. Please enter a non-negative number.");
+                    } else {
+                        break;
+                    }
+                } else {
+                    System.err.println("Invalid salary format. Please enter a valid number.");
+                    scanner.next(); //clear the invalid input from the scanner buffer
+                }
             }
-            // TODO: check exceptions
-            if (name.isEmpty()){
-                throw new UnsupportedOperationException("Teacher name is empty");
-            }
-
-            System.out.println("Please enter the salary");
-            salary = scanner.nextDouble();
-
+            scanner.nextLine(); //consume the newline character left by nextDouble()
             Teacher teacher = new Teacher(name, salary);
             teacherMap.put(teacher.getTeacherId(), teacher);
-            scanner.nextLine();
         }
-        System.out.println("Teachers were created successfully");
-        return teacherMap;
+        System.out.println("Teachers were created successfully!");
     }
 
-    public static HashMap<String, Student> createStudentMap(int n){
+    //test
+    public static void createStudentMap(int n) {
         String name, address, email;
-        HashMap<String,Student> studentMap = new HashMap<>();
         scanner.nextLine();
+
         for (int i = 0; i < n; i++) {
-            System.out.println("Please enter the student name:");
-            name = scanner.nextLine();
-            if (name == null){
-                throw new NullPointerException("Student name is null!");
-            }
-            // TODO: check exceptions
-            if (name.isEmpty()){
-                throw new UnsupportedOperationException("Student name is empty");
-            }
+            do {
+                System.out.println("Please enter the student name:");
+                name = scanner.nextLine();
+                if (name == null || name.isEmpty()) {
+                    System.err.println("Student name cannot be empty. Please try again.");
+                }
+            } while (name == null || name.isEmpty());
 
-            System.out.println("Please enter the student address: ");
-            address = scanner.nextLine();
+            do {
+                System.out.println("Please enter the student address:");
+                address = scanner.nextLine();
+                if (address == null || address.isEmpty()) {
+                    System.err.println("Student address cannot be empty. Please try again.");
+                }
+            } while (address == null || address.isEmpty());
 
-            if (address == null){
-                throw new NullPointerException("Student address is null!");
-            }
-            // TODO: check exceptions
-            if (address.isEmpty()){
-                throw new UnsupportedOperationException("Student address is empty");
-            }
-
-            System.out.println("Please enter the student email");
-            email = scanner.nextLine();
-            if (email == null){
-                throw new NullPointerException("Student email is null!");
-            }
-            // TODO: check exceptions
-            if (email.isEmpty()){
-                throw new UnsupportedOperationException("Student email is empty");
-            }
+            do {
+                System.out.println("Please enter the student email:");
+                email = scanner.nextLine();
+                if (email == null || email.isEmpty()) {
+                    System.err.println("Student email cannot be empty. Please try again.");
+                }
+            } while (email == null || email.isEmpty());
 
             Student student = new Student(name, address, email);
             studentMap.put(student.getStudentId(), student);
         }
-        System.out.println("Students were created successfully");
-        return studentMap;
+        System.out.println("Students were created successfully!");
     }
 
-    public static HashMap<String, Course> createCourseMap(int n){
+    //Test
+    public static void createCourseMap(int n) {
         String name;
         double price;
-        HashMap<String,Course> courseMap = new HashMap<>();
         scanner.nextLine();
-        for (int i = 0; i < n; i++) {
-            System.out.println("Please enter the course name:");
-            name = scanner.nextLine();
-            if (name == null){
-                throw new NullPointerException("Course name is null!");
-            }
-            // TODO: check exceptions
-            if (name.isEmpty()){
-                throw new UnsupportedOperationException("Course name is empty");
-            }
-            System.out.println("Please enter the course's price: ");
-            price = scanner.nextDouble();
 
+        for (int i = 0; i < n; i++) {
+            do {
+                System.out.println("Please enter the course name:");
+                name = scanner.nextLine();
+                if (name == null || name.isEmpty()) {
+                    System.err.println("Course name cannot be empty. Please try again.");
+                }
+            } while (name == null || name.isEmpty());
+
+            while (true) {
+                System.out.println("Please enter the course's price:");
+                if (scanner.hasNextDouble()) {
+                    price = scanner.nextDouble();
+                    if (price < 0) {
+                        System.err.println("Price cannot be negative. Please enter a non-negative number.");
+                    } else {
+                        break;
+                    }
+                } else {
+                    System.err.println("Invalid price format. Please enter a valid number.");
+                    scanner.next(); //clear the invalid input from the scanner buffer
+                }
+            }
+            scanner.nextLine(); //consume the newline character left by nextDouble()
             Course course = new Course(name, price);
             courseMap.put(course.getCourseId(), course);
-            scanner.nextLine();
         }
-        System.out.println("Courses were created successfully");
-        return courseMap;
+        System.out.println("Courses were created successfully!");
     }
 }
