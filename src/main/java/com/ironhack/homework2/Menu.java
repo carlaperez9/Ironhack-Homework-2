@@ -11,7 +11,7 @@ public class Menu {
     public static void main(String[] args) {
 
         //Student student1 = new Student("Carla","parada 22", "carla@popular.com");
-        /*System.out.println("SCHOOL MANAGEMENT SYSTEM");
+        System.out.println("SCHOOL MANAGEMENT SYSTEM");
         System.out.println("Enter school name: ");
         String schoolName = scanner.nextLine();
 
@@ -25,16 +25,16 @@ public class Menu {
 
         System.out.println("Enter amount of students to create: ");
         int numberStudent = scanner.nextInt();
-        Map<String, Student> studentMap = createStudentMap(numberStudent, scanner); */
+        Map<String, Student> studentMap = createStudentMap(numberStudent, scanner);
 
         //command center
         //while
-        commandCenter();
+        commandCenter(studentMap, teacherMap, courseMap);
 
 
     }
 
-    public static void commandCenter(){
+    public static void commandCenter(HashMap<String, Student> studentMap, HashMap<String, Teacher> teacherMap, HashMap<String, Course> courseMap){
 
         System.out.println("\nCommand Center: ");
         System.out.println("--> ENROLL [STUDENT_ID] [COURSE_ID]"); //FABIOLA ENROLL 1 2
@@ -54,9 +54,11 @@ public class Menu {
         switch (command) {
             case "ENROLL":
                 System.out.println("Command: ENROLL");
+                enrollStudents(commandParts[1], commandParts[2], studentMap, courseMap);
                 break;
             case "ASSIGN":
                 System.out.println("Command: ASSIGN");
+                assignTeacher(commandParts[1], commandParts[2], teacherMap,courseMap);
                 break;
             case "SHOW":
                 String show = commandParts[1];
@@ -103,10 +105,16 @@ public class Menu {
 
     }
 
-    private static void enrollStudents(String studentId, String courseId) {
+    private static void enrollStudents(String studentId, String courseId, HashMap<String, Student> studentMap, HashMap<String, Course> courseMap) {
+        Student student = studentMap.get(studentId);
+        student.setCourse(courseMap.get(courseId));
+        System.out.println("Student has been enrolled successfully.");
     }
 
-    private static void assignTeacher(String teacherId, String courseId) {
+    private static void assignTeacher(String teacherId, String courseId, HashMap<String, Teacher> teacherMap, HashMap<String, Course> courseMap) {
+        Course course = courseMap.get(courseId);
+        course.setTeacher(teacherMap.get(teacherId));
+        System.out.println("Teacher has been assigned successfully");
     }
 
     private static void showCourses() {

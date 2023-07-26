@@ -55,4 +55,11 @@ public class Student {
         this.email = email;
     }
 
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
 }
