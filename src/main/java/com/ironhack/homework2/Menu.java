@@ -1,5 +1,8 @@
 package com.ironhack.homework2;
 
+import com.ironhack.homework2.Course;
+import com.ironhack.homework2.Teacher;
+
 import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -11,31 +14,37 @@ public class Menu {
     private static Map<String, Student> studentMap;
     private static Map<String, Course> courseMap;
 
+    private static boolean startMenu;
+    private static boolean exitMenu;
+  
     public static void main(String[] args) {
 
-       //Student student1 = new Student("Carla","parada 22", "carla@popular.com");
-        System.out.println("SCHOOL MANAGEMENT SYSTEM");
-        System.out.println("Enter school name: ");
-        String schoolName = scanner.nextLine();
+        while(startMenu == false) {
+            //Student student1 = new Student("Carla","parada 22", "carla@popular.com");
+            System.out.println("SCHOOL MANAGEMENT SYSTEM");
+            System.out.println("Enter school name: ");
+            String schoolName = scanner.nextLine();
 
-        System.out.println("Enter amount of teachers to create: ");
-        int n = scanner.nextInt();
-        teacherMap = createTeacherMap(n, scanner);
+            System.out.println("Enter amount of teachers to create: ");
+            int n = scanner.nextInt();
+            teacherMap = createTeacherMap(n, scanner);
+          
+            System.out.println("Enter amount of courses to create: ");
+            int numberCourse = scanner.nextInt();
+            courseMap = createCourseMap(numberCourse, scanner);
 
-        System.out.println("Enter amount of courses to create: ");
-        int numberCourse = scanner.nextInt();
-        courseMap = createCourseMap(numberCourse, scanner);
+            System.out.println("Enter amount of students to create: ");
+            int numberStudent = scanner.nextInt();
+            studentMap = createStudentMap(numberStudent, scanner);
 
-        System.out.println("Enter amount of students to create: ");
-        int numberStudent = scanner.nextInt();
-        studentMap = createStudentMap(numberStudent, scanner);
-
-        commandCenter();
-
-
+            //command center
+            while (exitMenu == false) {
+                commandCenter();
+            }
+        }
     }
 
-    public static void commandCenter(){
+    public static void commandCenter(Map<String, Student> studentMap, Map<String, Teacher> teacherMap, Map<String, Course> courseMap){
 
         System.out.println("\nCommand Center: ");
         System.out.println("--> ENROLL [STUDENT_ID] [COURSE_ID]");
@@ -47,6 +56,8 @@ public class Menu {
         System.out.println("--> SHOW TEACHERS");
         System.out.println("--> LOOKUP TEACHER [TEACHER_ID]");
         System.out.println("--> SHOW PROFIT");
+        System.out.println("--> SETUP NEW SCHOOL");
+        System.out.println("--> EXIT");
 
         String answer = scanner.nextLine();
         String[] commandParts = answer.split(" ");
@@ -67,12 +78,17 @@ public class Menu {
                 switch (show) {
                     case "COURSES":
                         System.out.println("Command: SHOW COURSES");
+                        try {
+                            showCourses(courseMap);
+                        }catch(InterruptedException e){
+                            System.out.println("Interruption occurred.");
+                        }
                         break;
                     case "STUDENTS":
-                        System.out.println("Command: SHOW STUDENTS");
+                        showStudents(studentMap);
                         break;
                     case "TEACHERS":
-                        System.out.println("Command: SHOW TEACHERS");
+                        showTeachers(teacherMap);
                         break;
                     case "PROFIT":
                         System.out.println("Command: SHOW PROFIT");
@@ -83,15 +99,14 @@ public class Menu {
                 }
                 break;
             case "LOOKUP":
-                String[] lookupArgs = commandParts[1].split("\\s+", 2);
-                String lookup = lookupArgs[0];
-                System.out.println(lookupArgs[1]);
-                switch (lookup) {
+                switch (commandParts[1]) {
                     case "COURSE":
+                        System.out.println(commandParts[0] + commandParts[1] + commandParts[2]);
                         System.out.println("Command: LOOKUP COURSE");
+                        lookUpCourse(commandParts[2], courseMap);
                         break;
                     case "STUDENT":
-                        System.out.println("Command: LOOKUP STUDENT");
+                        lookUpStudent(lookupArgs[1], studentMap);
                         break;
                     case "TEACHER":
                         System.out.println("Command: LOOKUP TEACHER");
@@ -101,6 +116,12 @@ public class Menu {
                         break;
                 }
                 break;
+
+            case "SETUP":
+                startMenu = true;
+            case "EXIT":
+                exitMenu = true;
+
             default:
                 System.out.println("Invalid Command");
         }
@@ -119,19 +140,65 @@ public class Menu {
         System.out.println("Teacher "+ course.getTeacher().getName() + " has been assigned to " + course.getName());
     }
 
-    private static void showCourses() {
+    private static void showCourses(Map<String, Course> courseMap) throws InterruptedException {
+        // Carla
+        System.out.println("Course List:\n");
+        for (Course course : courseMap.values()){
+            System.out.println("Course: " + course.getName());
+            System.out.println("Course Id: " + course.getCourseId());
+            System.out.println("Course Price: " + course.getPrice());
+            System.out.println("Profit from this course: " + "$" + course.getMoney_earned());
+            System.out.println("-----------------------------------");
+            Thread.sleep(1500);
+        }
+
     }
 
-    private static void lookUpCourse(String courseId) {
+    private static void lookUpCourse(String courseId, Map<String, Course> courseMap) {
+        System.out.println("Course Details: \n");
+        System.out.println("Course Name: " + courseMap.get(courseId).getName());
+        System.out.println("Course ID: " + courseMap.get(courseId).getCourseId());
+        System.out.println("Cost: " +  "$" + courseMap.get(courseId).getPrice());
+        System.out.println("Profit from this course: " + "$" + courseMap.get(courseId).getMoney_earned());
+        System.out.println("-----------------------------------");
+
     }
 
-    private static void showStudents() {
+    private static void showStudents(Map<String, Student> studentMap) {
+        // show a list of all students
+        System.out.println("List of Students: ");
+        for (Student student : studentMap.values()){
+            System.out.println("ID: " + student.getStudentId());
+            System.out.println("Name: " + student.getName());
+            System.out.println("Address: " + student.getAddress());
+            System.out.println("Email: " + student.getEmail());
+            System.out.println("-----------------------------------");
+        }
     }
 
-    private static void lookUpStudent(String studentId) {
+    private static void lookUpStudent(String studentId, Map<String, Student> studentMap) {
+        // look up a specific student by their ID
+        Student student = studentMap.get(studentId);
+        if (student != null){
+            System.out.println("Student Info: ");
+            System.out.println("ID: " + student.getStudentId());
+            System.out.println("Name: " + student.getName());
+            System.out.println("Address: " + student.getAddress());
+            System.out.println("Email: " + student.getEmail());
+        } else {
+            System.out.println("Student with ID: " + studentId + " not found.");
+        }
     }
 
-    private static void showTeachers() {
+    private static void showTeachers(Map<String, Teacher> teacherMap) {
+        // show a list of all teachers
+        System.out.println("List of Teachers: ");
+        for (Teacher teacher : teacherMap.values()){
+            System.out.println("ID: " + teacher.getTeacherId());
+            System.out.println("Name: " + teacher.getName());
+            System.out.println("Salary: " + teacher.getSalary());
+            System.out.println("-----------------------------------");
+        }
     }
 
     private static void lookUpTeacher(String teacherId) {
@@ -221,17 +288,18 @@ public class Menu {
             System.out.println("Please enter the course name:");
             name = scanner.nextLine();
             if (name == null){
-                throw new NullPointerException("Student name is null!");
+                throw new NullPointerException("Course name is null!");
             }
             // TODO: check exceptions
             if (name.isEmpty()){
-                throw new UnsupportedOperationException("Student name is empty");
+                throw new UnsupportedOperationException("Course name is empty");
             }
             System.out.println("Please enter the course's price: ");
             price = scanner.nextDouble();
 
             Course course = new Course(name, price);
             courseMap.put(course.getCourseId(), course);
+            scanner.nextLine();
         }
         System.out.println("Courses were created successfully");
         return courseMap;
