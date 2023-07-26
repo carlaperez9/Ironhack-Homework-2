@@ -220,7 +220,7 @@ public class Menu {
         }
     }
 
-    private static void lookUpTeacher(String teacherId, Map<String, Teacher> teacherMap) {
+    public static void lookUpTeacher(String teacherId, Map<String, Teacher> teacherMap) {
         // get the teacher
         Teacher teacher = teacherMap.get(teacherId);
 
@@ -229,7 +229,7 @@ public class Menu {
             System.out.println("Teacher Info: ");
             System.out.println("ID: " + teacher.getTeacherId());
             System.out.println("Name: " + teacher.getName());
-            System.out.println("Address: " + teacher.getSalary());
+            System.out.println("Salary: " + teacher.getSalary());
             System.out.println("-----------------------------------");
         } else {
             System.out.println("Teacher with ID: " + teacherId + " not found.");
@@ -237,7 +237,7 @@ public class Menu {
 
     }
 
-    private static void showProfit(Map<String, Teacher> teacherMap, Map<String, Course> courseMap) {
+    public static void showProfit(Map<String, Teacher> teacherMap, Map<String, Course> courseMap) {
         double totalTeacherSalary = 0;          // this will hold the total salary of the teachers in the map
         double totalMoneyEarned = 0;            // this will hold the total money earned of all the courses
 
