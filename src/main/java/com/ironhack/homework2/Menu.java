@@ -288,23 +288,30 @@ public class Menu {
         HashMap<String,Teacher> teacherMap = new HashMap<>();
         scanner.nextLine();
         for (int i = 0; i < n; i++) {
-            System.out.println("Please enter the teacher name:");
+            System.out.println("Please enter the teacher's name:");
             name = scanner.nextLine();
 
-            if (name == null){
-                throw new NullPointerException("Teacher name is null!");
-            }
-            // TODO: check exceptions
-            if (name.isEmpty()){
-                throw new UnsupportedOperationException("Teacher name is empty");
+            while(name == null || name.trim().isEmpty() || !name.matches("^[a-zA-Z]*$")){
+                System.err.println("Invalid input. Teacher name cannot be null, empty, or have numeric values.");
+                name = scanner.nextLine();
             }
 
-            System.out.println("Please enter the salary");
+            System.out.println("Please enter the teacher's salary");
+            while(!scanner.hasNextDouble()){
+                System.err.println("Invalid input. Salary must be a numeric value.");
+                scanner.nextLine();
+            }
             salary = scanner.nextDouble();
+            scanner.nextLine();
+
+            while(salary <= 0) {
+                    System.err.println("Invalid input. Salary must be a numeric value.");
+                    salary = scanner.nextDouble();
+                    scanner.nextLine();
+            }
 
             Teacher teacher = new Teacher(name, salary);
             teacherMap.put(teacher.getTeacherId(), teacher);
-            scanner.nextLine();
         }
         System.out.println("Teachers were created successfully");
         return teacherMap;
@@ -314,36 +321,27 @@ public class Menu {
         String name, address, email;
         HashMap<String,Student> studentMap = new HashMap<>();
         scanner.nextLine();
+
         for (int i = 0; i < n; i++) {
             System.out.println("Please enter the student name:");
             name = scanner.nextLine();
-            if (name == null){
-                throw new NullPointerException("Student name is null!");
-            }
-            // TODO: check exceptions
-            if (name.isEmpty()){
-                throw new UnsupportedOperationException("Student name is empty");
+            while(name == null || name.isEmpty() || !name.matches("^[a-zA-Z]*$")){
+                System.err.println("Invalid input. Student name cannot be null, empty, or have numeric values.");
+                name = scanner.nextLine();
             }
 
             System.out.println("Please enter the student address: ");
             address = scanner.nextLine();
-
-            if (address == null){
-                throw new NullPointerException("Student address is null!");
-            }
-            // TODO: check exceptions
-            if (address.isEmpty()){
-                throw new UnsupportedOperationException("Student address is empty");
+            while(address == null || address.isEmpty() || !address.matches("^[a-zA-Z]*$")){
+                System.err.println("Invalid input. Student address cannot be null, empty, or have numeric values.");
+                address = scanner.nextLine();
             }
 
             System.out.println("Please enter the student email");
             email = scanner.nextLine();
-            if (email == null){
-                throw new NullPointerException("Student email is null!");
-            }
-            // TODO: check exceptions
-            if (email.isEmpty()){
-                throw new UnsupportedOperationException("Student email is empty");
+            while(email == null || email.isEmpty() || !email.matches("^[a-zA-Z]*$")){
+                System.err.println("Invalid input. Student email cannot be null, empty, or have numeric values.");
+                email = scanner.nextLine();
             }
 
             Student student = new Student(name, address, email);
@@ -361,19 +359,27 @@ public class Menu {
         for (int i = 0; i < n; i++) {
             System.out.println("Please enter the course name:");
             name = scanner.nextLine();
-            if (name == null){
-                throw new NullPointerException("Course name is null!");
-            }
-            // TODO: check exceptions
-            if (name.isEmpty()){
-                throw new UnsupportedOperationException("Course name is empty");
-            }
-            System.out.println("Please enter the course's price: ");
-            price = scanner.nextDouble();
 
+            while(name == null || name.isEmpty() || !name.matches("^[a-zA-Z]*$")){
+                System.err.println("Invalid input. Course name cannot be null, empty, or have numeric values.");
+                name = scanner.nextLine();
+            }
+
+            System.out.println("Please enter the course's price: ");
+            while(!scanner.hasNextDouble()){
+                System.err.println("Invalid input. Price must be a numeric value.");
+                scanner.nextLine();
+            }
+            price = scanner.nextDouble();
+            scanner.nextLine();
+
+            while(price <= 0){
+                System.err.println("Invalid input. Salary must be more than zero.");
+                price = scanner.nextDouble();
+                scanner.nextLine();
+            }
             Course course = new Course(name, price);
             courseMap.put(course.getCourseId(), course);
-            scanner.nextLine();
         }
         System.out.println("Courses were created successfully");
         return courseMap;
