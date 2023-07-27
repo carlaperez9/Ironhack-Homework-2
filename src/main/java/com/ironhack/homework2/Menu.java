@@ -17,6 +17,10 @@ public class Menu {
     private static boolean exitMenu;
   
     public static void main(String[] args) throws InterruptedException {
+        // setting true for exiting the menus
+        startMenu = false;
+        exitMenu = false;
+
         while (!startMenu) {
             System.out.println("SCHOOL MANAGEMENT SYSTEM");
             String schoolName;
@@ -133,15 +137,13 @@ public class Menu {
                 }
                 switch (commandParts[1]) {
                     case "COURSE":
-                        System.out.println(commandParts[0] + commandParts[1] + commandParts[2]);
-                        System.out.println("Command: LOOKUP COURSE");
                         lookUpCourse(commandParts[2], courseMap);
                         break;
                     case "STUDENT":
-                        lookUpStudent(commandParts[1], studentMap);
+                        lookUpStudent(commandParts[2], studentMap);
                         break;
                     case "TEACHER":
-                        lookUpTeacher(commandParts[1], teacherMap);
+                        lookUpTeacher(commandParts[2], teacherMap);
                         break;
                     default:
                         System.out.println("Invalid Command");
@@ -150,9 +152,12 @@ public class Menu {
                 break;
 
             case "SETUP":
-                startMenu = true;
-            case "EXIT":
                 exitMenu = true;
+                break;
+            case "EXIT":
+                startMenu = true;
+                exitMenu = true;
+                break;
 
             default:
                 System.out.println("Invalid Command");
