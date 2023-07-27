@@ -17,27 +17,46 @@ public class Menu {
     private static boolean exitMenu;
   
     public static void main(String[] args) throws InterruptedException {
-
-        while(startMenu == false) {
-           
+        while (!startMenu) {
             System.out.println("SCHOOL MANAGEMENT SYSTEM");
-            System.out.println("Enter school name: ");
-            String schoolName = scanner.nextLine();
-
-            System.out.println("Enter amount of teachers to create: ");
-            int numberTeacher = scanner.nextInt();
+            String schoolName;
+            int numberStudent, numberTeacher, numberCourse;
+            do {
+                System.out.println("Enter school name: ");
+                schoolName = scanner.nextLine();
+                if (schoolName.isEmpty() || !schoolName.matches("^[a-zA-Z]+$") || schoolName == null) {
+                    System.out.println("School name cannot be empty. Please try again.");
+                }
+            } while (schoolName.isEmpty() || !schoolName.matches("^[a-zA-Z]+$") || schoolName == null);
+            do {
+                System.out.println("Enter amount of teachers to create (must be a positive integer): ");
+                while (!scanner.hasNextInt()) {
+                    System.out.println("Invalid input. Please enter a positive integer.");
+                    scanner.next();
+                }
+                numberTeacher = scanner.nextInt();
+            } while (numberTeacher <= 0);
             teacherMap = createTeacherMap(numberTeacher);
-          
-            System.out.println("Enter amount of courses to create: ");
-            int numberCourse = scanner.nextInt();
+            do {
+                System.out.println("Enter amount of courses to create (must be a positive integer): ");
+                while (!scanner.hasNextInt()) {
+                    System.out.println("Invalid input. Please enter a positive integer.");
+                    scanner.next();
+                }
+                numberCourse = scanner.nextInt();
+            } while (numberCourse <= 0);
             courseMap = createCourseMap(numberCourse);
-
-            System.out.println("Enter amount of students to create: ");
-            int numberStudent = scanner.nextInt();
+            do {
+                System.out.println("Enter amount of students to create (must be a positive integer): ");
+                while (!scanner.hasNextInt()) {
+                    System.out.println("Invalid input. Please enter a positive integer.");
+                    scanner.next();
+                }
+                numberStudent = scanner.nextInt();
+            } while (numberStudent <= 0);
             studentMap = createStudentMap(numberStudent);
-
             //command center
-            while (exitMenu == false) {
+            while (!exitMenu) {
                 commandCenter(studentMap, teacherMap, courseMap);
             }
         }
@@ -332,14 +351,14 @@ public class Menu {
 
             System.out.println("Please enter the student address: ");
             address = scanner.nextLine();
-            while(address == null || address.isEmpty() || !address.matches("^[a-zA-Z]*$")){
+            while(address == null || address.isEmpty() || address.matches("^[a-zA-Z]*$")){
                 System.err.println("Invalid input. Student address cannot be null, empty, or have numeric values.");
                 address = scanner.nextLine();
             }
 
             System.out.println("Please enter the student email");
             email = scanner.nextLine();
-            while(email == null || email.isEmpty() || !email.matches("^[a-zA-Z]*$")){
+            while(email == null || email.isEmpty() || email.matches("^[a-zA-Z]*$")){
                 System.err.println("Invalid input. Student email cannot be null, empty, or have numeric values.");
                 email = scanner.nextLine();
             }
