@@ -29,13 +29,13 @@ public class Menu {
                 System.out.println("Enter school name: ");
                 schoolName = scanner.nextLine();
                 if (schoolName.isEmpty() || !schoolName.matches("^[a-zA-Z]+$") || schoolName == null) {
-                    System.out.println("School name cannot be empty. Please try again.");
+                    System.err.println("Invalid School name. Please try again.");
                 }
             } while (schoolName.isEmpty() || !schoolName.matches("^[a-zA-Z]+$") || schoolName == null);
             do {
                 System.out.println("Enter amount of teachers to create (must be a positive integer): ");
                 while (!scanner.hasNextInt()) {
-                    System.out.println("Invalid input. Please enter a positive integer.");
+                    System.err.println("Invalid input. Please enter a positive integer.");
                     scanner.next();
                 }
                 numberTeacher = scanner.nextInt();
@@ -44,7 +44,7 @@ public class Menu {
             do {
                 System.out.println("Enter amount of courses to create (must be a positive integer): ");
                 while (!scanner.hasNextInt()) {
-                    System.out.println("Invalid input. Please enter a positive integer.");
+                    System.err.println("Invalid input. Please enter a positive integer.");
                     scanner.next();
                 }
                 numberCourse = scanner.nextInt();
@@ -53,7 +53,7 @@ public class Menu {
             do {
                 System.out.println("Enter amount of students to create (must be a positive integer): ");
                 while (!scanner.hasNextInt()) {
-                    System.out.println("Invalid input. Please enter a positive integer.");
+                    System.err.println("Invalid input. Please enter a positive integer.");
                     scanner.next();
                 }
                 numberStudent = scanner.nextInt();
@@ -113,7 +113,7 @@ public class Menu {
                         try {
                             showCourses(courseMap);
                         }catch(InterruptedException e){
-                            System.out.println("Interruption occurred.");
+                            System.err.println("Interruption occurred.");
                         }
                         break;
                     case "STUDENTS":
@@ -126,7 +126,7 @@ public class Menu {
                         showProfit(teacherMap, courseMap);
                         break;
                     default:
-                        System.out.println("Invalid Command");
+                        System.err.println("Invalid Command");
                         break;
                 }
                 break;
@@ -146,7 +146,7 @@ public class Menu {
                         lookUpTeacher(commandParts[2], teacherMap);
                         break;
                     default:
-                        System.out.println("Invalid Command");
+                        System.err.println("Invalid Command");
                         break;
                 }
                 break;
@@ -160,7 +160,7 @@ public class Menu {
                 break;
 
             default:
-                System.out.println("Invalid Command");
+                System.err.println("Invalid Command");
         }
     }
 
